@@ -3,7 +3,7 @@
 */
 
 #pragma once
-#include "Maze.h"
+#include "Laberinto.h"
 
-void updateGraph(Maze &maze);
-bool makeMove(Maze &maze, Square move);
+void updateGraph(Tablero &tablero);
+bool makeMove(Tablero &tablero, Posicion move);

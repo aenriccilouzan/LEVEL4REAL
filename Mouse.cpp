@@ -1,6 +1,6 @@
 #include "Mouse.h"
 
-static Direction moveDirection(Square &move);
+static Direction moveDirection(Posicion &move);
 
 /**
  * @brief Make move if possible.
@@ -9,12 +9,12 @@ static Direction moveDirection(Square &move);
  * @param move The move to make.
  * @return Move is possible and done.
 */
-bool makeMove(Maze &maze, Square move)
+bool makeMove(Tablero &tablero, Posicion move)
 {
-    Square newPosition = {maze.position.x + move.x, maze.position.y + move.y};
+    Square newPosition = {tablero.position.x + move.x, tablero.position.y + move.y};
     bool found = false;
-    auto neighbors = maze.board[maze.position.x][maze.position.y].neighbors;
-    for (Square position : neighbors)
+    auto vecinos = tablero.board[tablero.position.x][tablero.position.y].vecinos;
+    for (Posicion position : virtual)
     {
         if (newPosition.x == position.x && newPosition.y == position.y)
         {
@@ -27,12 +27,12 @@ bool makeMove(Maze &maze, Square move)
         return false;
     }
     Direction moveDir = moveDirection(move);
-    while (maze.direction != moveDir)
+    while (tablero.direction != moveDir)
     {
         API::turnRight();
     }
     API::moveForward();
-    maze.position = newPosition;
+    tablero.position = newPosition;
     return true;
 }
 
@@ -41,9 +41,9 @@ bool makeMove(Maze &maze, Square move)
  * 
  * @param maze The maze.
 */
-void updateGraph(Maze &maze)
+void updateGraph(Tablero &tablero)
 {
-    auto currentNode = maze.board[maze.position.x][maze.position.y];
+    auto currentNode = maze.board[tablero.position.x][tablero.position.y];
     bool fWall = API::wallFront();
     bool rWall = API::wallRight();
     bool lWall = API::wallLeft();
@@ -64,7 +64,7 @@ void updateGraph(Maze &maze)
  * @param move The move.
  * @return The direction of the move.
 */
-static Direction moveDirection(Square &move)
+static Direction moveDirection(Posicion &move)
 {
     if (move.y == 1)
         return UP;
